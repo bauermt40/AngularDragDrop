@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ngDraggable</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/2.3.1/spruce/bootstrap.min.css">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body ng-app="app">
+
+<div class="container" ng-controller="dragDropCtrl">
+
+    <div class="row">
+        <h1>ngDraggable Example</h1>
+    </div>
+
+    <ul class="draggable-objects">
+        <li ng-if="true">
+            <div ng-drag="true" ng-drag-data="{name:'test'}" data-allow-transform="true">TEST</div>
+        </li>
+    </ul>
+
+    <hr/>
+    <div ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+        <span class="title">Drop area #1</span>
+
+        <div ng-repeat="obj in droppedObjects" ng-drag="true" ng-drag-data="obj"
+             ng-drag-success="onDragSuccess($data,$event)" ng-center-anchor="{{centerAnchor}}">
+            {{obj.name}}
+        </div>
+
+    </div>
+
+    <hr>
+    
+    <h1>ngDroplet Example</h1>
+    <section class="container">
+
+        <section class="droplet" ng-class="{ uploading: interface.isUploading() }">
+
+            <droplet ng-model="interface">
+
+                <div class="loading" ng-class="{ visible: interface.isUploading() }">
+                    <svg viewbox="0 0 400 400">
+                        <path class="loading-path" data-progressbar ng-model="interface.progress.percent"
+                              d="M 0,1 L 398,1 L 398,234 L 1,234 L 0,1"
+                              stroke="#D3B2D1" stroke-width="1" fill-opacity="0"
+                              style="stroke-dasharray: 392px, 392px;stroke-dashoffset: 392px;"></path>
+                    </svg>
+                </div>
+
+                <comment></comment>
+
+                <ul class="files">
+
+                    <li ng-repeat="model in interface.getFiles(interface.FILE_TYPES.VALID)">
+                        <droplet-preview ng-model="model"></droplet-preview>
+                        <div class="delete" ng-click="model.deleteFile()">&times;</div>
+                        <div class="size">{{model.file.size / 1024 / 1024 | number: 1}}MB</div>
+                    </li>
+
+                </ul>
+
+            </droplet>
+
+        </section>
+
+    </section>
+
+
+</div>
+<footer style="margin-top:2000px;">footer</footer>
+
+<script src="/scripts/angular.min.js"></script>
+<script src="/app/app.js"></script>
+<script src="/scripts/ngDraggable.js"></script>
+<script src="scripts/ngDroplet.js"></script>
+<script src="/app/dragDropCtrl.js"></script>
+</body>
+</html>
